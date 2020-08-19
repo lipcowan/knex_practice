@@ -11,7 +11,7 @@ describe("Shopping List Service object", () => {
       date_added: new Date("2029-01-22T16:28:32.615Z"),
       price: "12.00",
       category: "Main",
-      checked: false
+      checked: false,
     },
     {
       id: 2,
@@ -19,7 +19,7 @@ describe("Shopping List Service object", () => {
       date_added: new Date("2100-05-22T16:28:32.615Z"),
       price: "21.00",
       category: "Snack",
-      checked: false
+      checked: false,
     },
     {
       id: 3,
@@ -27,7 +27,7 @@ describe("Shopping List Service object", () => {
       date_added: new Date("1919-12-22T16:28:32.615Z"),
       price: "3.00",
       category: "Lunch",
-      checked: false
+      checked: false,
     },
     {
       id: 4,
@@ -35,8 +35,8 @@ describe("Shopping List Service object", () => {
       date_added: new Date("1919-12-22T16:28:32.615Z"),
       price: "0.99",
       category: "Breakfast",
-      checked: false
-    }
+      checked: false,
+    },
   ];
 
   before(() => {
@@ -73,9 +73,19 @@ describe("Shopping List Service object", () => {
           date_added: thirdItem.date_added,
           price: thirdItem.price,
           category: thirdItem.category,
-          checked: thirdItem.checked
+          checked: thirdItem.checked,
         })
       );
+    });
+
+    it("deleteItem() removes an item by id from shopping_list table", () => {
+      const dItemId = 2;
+      return ShoppingListService.deleteItem(db, dItemId)
+        .then(() => ShoppingListService.getList(db))
+        .then((list) => {
+          const newList = testItems.filter((item) => item.id !== dItemId);
+          expect(list).to.eql(newList);
+        });
     });
   });
 

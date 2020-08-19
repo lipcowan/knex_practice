@@ -10,7 +10,14 @@ const ShoppingListService = {
             .from('shopping_list')
             .where('id', id)
             .first()
-    }
+    },
+    deleteItem(knex, id) {
+        return knex
+            .from('shopping_list')
+            .where({id})
+            .delete()
+    },
+    
 
 }
 
